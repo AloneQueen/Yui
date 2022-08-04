@@ -14,7 +14,7 @@ yui_bot_id = int(Config.BOT_TOKEN.split(":")[0])
 
 
 # Chat
-@yuiai.on_message(~filters.command(["engine", "help", "restart"]) &~filters.via_bot)
+@yuiai.on_message(~filters.command(["engine", "restart"]) &~filters.via_bot)
 async def talk_with_yui(_, message: Message):
     c_type = message.chat.type
     r_msg = message.reply_to_message
@@ -67,32 +67,7 @@ async def talk_with_yui(_, message: Message):
 async def set_yui_engine(_, message: Message):
     if len(message.command) != 2:
         engines_txt = """
-**⚡️ OpenAI Engines**
-
-
-**Base**
-
-✧ `davinci` - The most capable engine and can perform any task the other models can perform and often with less instruction.
-✧ `curie` - Extremely powerful, yet very fast.
-✧ `babbage` - Can perform straightforward tasks like simple classification.
-✧ `ada` - Usually the fastest model and can perform tasks that don’t require too much nuance.
-
-
-**GPT-3 Models**
-
-GPT-3 models can understand and generate natural language. Openai offer four main models with different levels of power suitable for different tasks. Davinci is the most capable model, and Ada is the fastest
-
-✧ `text-davinci-002`
-✧ `text-curie-001`
-✧ `text-babbage-001`
-✧ `text-ada-001`
-
-
-**👀 How to set the engines?**
-
-To set an engine use `/engine` command followed by the engine code name you want
-**Ex:**
-`/engine text-curie-001`"""
+Only Admins !!"""
         return await message.reply_text(engines_txt)
     else:
         yui_base = Yui_Base()
@@ -107,22 +82,6 @@ To set an engine use `/engine` command followed by the engine code name you want
             await message.reply(await yui_base.emergency_pick())
 
 
-# Help
-@yuiai.on_message(filters.command("help"))
-async def help_yui(_, message: Message):
-    help_msg = """
-**✨ Help Section**
-
-
-**How to change OpenAI engine 🤔?**
-    - To change OpenAI Engine use `/engine` command followed by the engine name. For more info send /engine command
-
-**How to ban someone from Bot 🤔?**
-    - This is a chat bot tho. Why you need to ban someone? If it's necessary use "banable" branch and send `/ban` command (Only for Heroku Users)
-
-
-**Made with ❤️ by @NexaBotsUpdates**
-"""
     await message.reply(help_msg, reply_to_message_id=message.id)
 
 
@@ -134,4 +93,4 @@ async def restart_yui(_, message: Message):
         await message.reply(f"`Restarting {Config.CHAT_BOT_NAME}, Please wait...!`")
         await yui_base.restart_yui()
     else:
-        await message.reply("**This command is available only for Heroku users**")
+        await message.reply("**This command is available only for admins**")
